@@ -22,45 +22,25 @@ public class StudentController {
 
     // Get student by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Student> getStudentById(@PathVariable Integer id) {
-        return ResponseEntity.ok(studentService.getStudentById(id));
+    public StudentResponseDto getStudentById(@PathVariable Integer id) {
+        return studentService.getStudentById(id);
     }
 
     // Create a new student
     @PostMapping
     public StudentResponseDto createStudent(@RequestBody StudentDto studentDto) {
-        var student = toStudent(studentDto);
-        Student savedStudent=studentService.createStudent(student);
-
-        return toStudentResponseDto(savedStudent);
+        return studentService.createStudent(studentDto);
     }
-
-    private Student toStudent(StudentDto studentDetails) {
-        Student student = new Student();
-        var school = new School();
-        school.setId(studentDetails.schoolId());
-        student.setFirstname(studentDetails.firstname());
-        student.setLastname(studentDetails.lastname());
-        student.setEmail(studentDetails.email());
-        student.setSchool(school);
-
-        return student;
-    }
-
-private StudentResponseDto toStudentResponseDto(Student student){
-    return new StudentResponseDto(student.getFirstname(), student.getLastname(), student.getEmail());
-}
 
     // Update a student
     @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Integer id, @RequestBody Student studentDetails) {
-        return ResponseEntity.ok(studentService.updateStudent(id, studentDetails));
+    public StudentResponseDto updateStudent(@PathVariable Integer id, @RequestBody StudentDto studentDto) {
+        return studentService.updateStudent(id, studentDto);
     }
 
     // Delete a student
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteStudent(@PathVariable Integer id) {
+    public void deleteStudent(@PathVariable Integer id) {
         studentService.deleteStudent(id);
-        return ResponseEntity.noContent().build();
     }
 }

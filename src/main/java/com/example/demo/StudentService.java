@@ -6,30 +6,34 @@ import java.util.List;
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
+    private final StudentMapper studentMapper;
 
- 
-
-  
-
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper) {
         this.studentRepository = studentRepository;
+        this.studentMapper = studentMapper;
     }
 
     public List<Student> getAll() {
         return studentRepository.findAll();
     }
 
-    public Student getStudentById(Integer id) {
-        return studentRepository.getById(id);
+    public StudentResponseDto getStudentById(Integer id) {
+        return studentMapper.toStudentResponseDto(studentRepository.getById(id));
     }
 
-    public Student createStudent(Student user) {
-        return studentRepository.save(user);
+    public StudentResponseDto createStudent(StudentDto studentDto) {
+        var student = studentMapper.toStudent(studentDto);
+        studentRepository.save(student);
+        return studentMapper.toStudentResponseDto(student);
     }
 
-    public Student updateStudent(Integer id, Student userDetails) {
-        Student user = getStudentById(id);
-        return studentRepository.save(userDetails);
+    public StudentResponseDto updateStudent(Integer id, StudentDto studentDto) {
+        Student student = studentRepository.getById(id);
+        student.setFirstname(studentDto.firstname());
+        student.setLastname(studentDto.lastname());
+        student.setEmail(studentDto.email());
+        studentRepository.save(student);
+        return studentMapper.toStudentResponseDto(student);
     }
 
     public void deleteStudent(Integer id) {

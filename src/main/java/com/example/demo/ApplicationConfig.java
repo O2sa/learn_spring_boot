@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Profile;
 public class ApplicationConfig {
 
     @Bean
-    @Profile("dev")
+    @Primary
     public MyFirstClass myFirstBean() {
         return new MyFirstClass("Dev bean");
     }

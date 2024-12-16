@@ -9,52 +9,40 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/schools")
 public class SchoolController {
-    private final SchoolRepository schoolRepository;
+    private final SchoolService schoolService;
 
-    public SchoolController(SchoolRepository schoolRepository) {
-        this.schoolRepository = schoolRepository;
+    public SchoolController(SchoolService schoolService) {
+        this.schoolService = schoolService;
     }
 
     // Get all schools
     @GetMapping
     public List<SchoolDto> getAllSchools() {
-        return schoolRepository.findAll()
-                .stream().map(this::toSchoolDto).collect(Collectors.toList());
+        return schoolService.getAll();
     }
 
-    private SchoolDto toSchoolDto(School school) {
-        return new SchoolDto(school.getName());
-    }
     // Get school by ID
-    // @GetMapping("/{id}")
-    // public ResponseEntity<School> getSchoolById(@PathVariable Integer id) {
-    // return ResponseEntity.ok(schoolRepository.findAllById(id));
-    // }
+    @GetMapping("/{id}")
+    public SchoolDto getSchoolById(@PathVariable Integer id) {
+        return schoolService.getSchoolById(id);
+    }
 
     // Create a new school
     @PostMapping
     public SchoolDto createSchool(@RequestBody SchoolDto schoolDto) {
-        schoolRepository.save(toSchool(schoolDto));
-        return schoolDto;
-    }
-
-    private School toSchool(SchoolDto schoolDto) {
-        School school = new School();
-        school.setName(schoolDto.name());
-        return school;
+        return schoolService.createSchool(schoolDto);
     }
 
     // Update a school
-    // @PutMapping("/{id}")
-    // public ResponseEntity<School> updateSchool(@PathVariable Integer id,
-    // @RequestBody School schoolDetails) {
-    // return ResponseEntity.ok(schoolRepository.updateSchool(id, schoolDetails));
-    // }
+    @PutMapping("/{id}")
+    public SchoolDto updateSchool(@PathVariable Integer id,
+            @RequestBody SchoolDto schoolDetails) {
+        return schoolService.updateSchool(id, schoolDetails);
+    }
 
     // // Delete a school
-    // @DeleteMapping("/{id}")
-    // public ResponseEntity<Void> deleteSchool(@PathVariable Integer id) {
-    // schoolRepository.deleteSchool(id);
-    // return ResponseEntity.noContent().build();
-    // }
+    @DeleteMapping("/{id}")
+    public void deleteSchool(@PathVariable Integer id) {
+        schoolService.deleteSchool(id);
+    }
 }
