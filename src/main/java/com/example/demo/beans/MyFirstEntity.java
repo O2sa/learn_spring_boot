@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.beans;
 
 public class MyFirstEntity {
     private String name;

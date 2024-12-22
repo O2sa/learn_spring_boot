@@ -1,6 +1,8 @@
-package com.example.demo;
+package com.example.demo.student;
 
 import org.springframework.stereotype.Service;
+
+import com.example.demo.school.School;
 
 @Service
 public class StudentMapper {

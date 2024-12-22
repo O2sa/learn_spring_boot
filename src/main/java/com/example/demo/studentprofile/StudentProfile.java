@@ -1,12 +1,12 @@
-package com.example.demo;
+package com.example.demo.studentprofile;
 
-import jakarta.persistence.Column;
+import com.example.demo.student.Student;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 
 @Entity
 public class StudentProfile {

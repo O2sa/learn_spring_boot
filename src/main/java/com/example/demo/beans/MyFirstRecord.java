@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.beans;
 
 public record MyFirstRecord(String name,
         Integer age,

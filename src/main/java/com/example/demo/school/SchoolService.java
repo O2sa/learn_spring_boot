@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.school;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
